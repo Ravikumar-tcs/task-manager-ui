@@ -12,7 +12,7 @@ on:
       - master
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  PROJECT_ID: demoproj-486421
   SERVICE_NAME: task-manager-ui
   REGION: us-central1
 
@@ -63,7 +63,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: demoproj-486421
 
       - name: Configure Docker for GCR
         run: |
