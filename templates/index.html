@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager - GCP Demo</title>
+    <title>Task Manager - AmTrust Financial</title>
     <style>
+        /* AmTrust Financial Theme - Navy Blue & Orange */
+        :root {
+            --amtrust-navy: #002855;
+            --amtrust-navy-dark: #001a3a;
+            --amtrust-navy-light: #003d7a;
+            --amtrust-orange: #F7931E;
+            --amtrust-orange-dark: #e07d0a;
+            --amtrust-orange-light: #ffab4a;
+            --amtrust-white: #ffffff;
+            --amtrust-gray-light: #f5f7fa;
+            --amtrust-gray: #6c757d;
+            --amtrust-gray-dark: #343a40;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +27,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, var(--amtrust-navy) 0%, var(--amtrust-navy-dark) 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -25,26 +39,38 @@
 
         .header {
             text-align: center;
-            color: white;
+            color: var(--amtrust-white);
             margin-bottom: 30px;
         }
 
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: var(--amtrust-orange);
         }
 
         .header p {
             font-size: 1.1em;
             opacity: 0.9;
+            color: var(--amtrust-gray-light);
         }
 
         .card {
-            background: white;
-            border-radius: 15px;
+            background: var(--amtrust-white);
+            border-radius: 8px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             margin-bottom: 20px;
+            border-top: 4px solid var(--amtrust-orange);
+        }
+
+        .card h2 {
+            color: var(--amtrust-navy);
+            font-weight: 600;
         }
 
         .input-group {
@@ -57,28 +83,31 @@
             flex: 1;
             padding: 12px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--amtrust-navy);
         }
 
         button {
             padding: 12px 30px;
-            background: #667eea;
-            color: white;
+            background: var(--amtrust-orange);
+            color: var(--amtrust-white);
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background: #5568d3;
+            background: var(--amtrust-orange-dark);
+            transform: translateY(-1px);
         }
 
         .task-list {
@@ -89,22 +118,26 @@
             display: flex;
             align-items: center;
             padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            background: var(--amtrust-gray-light);
+            border-radius: 4px;
             margin-bottom: 10px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 4px solid var(--amtrust-navy);
         }
 
         .task-item:hover {
             transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(0, 40, 85, 0.15);
         }
 
         .task-item.completed {
             opacity: 0.6;
+            border-left-color: var(--amtrust-gray);
         }
 
         .task-item.completed .task-title {
             text-decoration: line-through;
+            color: var(--amtrust-gray);
         }
 
         .task-checkbox {
@@ -112,6 +145,7 @@
             height: 24px;
             margin-right: 15px;
             cursor: pointer;
+            accent-color: var(--amtrust-orange);
         }
 
         .task-content {
@@ -122,54 +156,58 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 5px;
+            color: var(--amtrust-navy);
         }
 
         .task-description {
-            color: #666;
+            color: var(--amtrust-gray);
             font-size: 14px;
         }
 
         .task-priority {
             padding: 5px 15px;
-            border-radius: 20px;
+            border-radius: 4px;
             font-size: 12px;
             font-weight: 600;
             margin-right: 10px;
+            text-transform: uppercase;
         }
 
         .priority-high {
-            background: #fee;
-            color: #c00;
+            background: #dc3545;
+            color: var(--amtrust-white);
         }
 
         .priority-medium {
-            background: #ffeaa7;
-            color: #d63031;
+            background: var(--amtrust-orange);
+            color: var(--amtrust-white);
         }
 
         .priority-low {
-            background: #dfe6e9;
-            color: #2d3436;
+            background: var(--amtrust-navy-light);
+            color: var(--amtrust-white);
         }
 
         .delete-btn {
             padding: 8px 15px;
-            background: #d63031;
-            color: white;
+            background: var(--amtrust-navy);
+            color: var(--amtrust-white);
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s;
         }
 
         .delete-btn:hover {
-            background: #c0281f;
+            background: #dc3545;
         }
 
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: #999;
+            color: var(--amtrust-gray);
         }
 
         .filter-buttons {
@@ -180,25 +218,42 @@
 
         .filter-btn {
             padding: 8px 20px;
-            background: #e0e0e0;
-            color: #333;
-            border: none;
-            border-radius: 5px;
+            background: var(--amtrust-gray-light);
+            color: var(--amtrust-navy);
+            border: 2px solid var(--amtrust-navy);
+            border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: var(--amtrust-navy);
+            color: var(--amtrust-white);
         }
 
         .filter-btn.active {
-            background: #667eea;
-            color: white;
+            background: var(--amtrust-navy);
+            color: var(--amtrust-white);
+        }
+
+        /* AmTrust Logo/Branding */
+        .brand-accent {
+            width: 60px;
+            height: 4px;
+            background: var(--amtrust-orange);
+            margin: 15px auto;
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📝 Task Manager</h1>
-            <p>Deployed on Google Cloud Run</p>
+            <h1>Task <span class="highlight">Manager</span></h1>
+            <div class="brand-accent"></div>
+            <p>Powered by AmTrust Financial | Deployed on Google Cloud Run</p>
         </div>
 
         <div class="card">
