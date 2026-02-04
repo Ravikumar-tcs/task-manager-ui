@@ -6,9 +6,10 @@ This document provides essential context for AI assistants working with this cod
 
 **Type:** Full-stack Task Management Web Application
 **Purpose:** Demo application showcasing AI-assisted development with deployment on Google Cloud Run
+**Theme:** AmTrust Financial branding (Navy Blue #002855 & Orange #F7931E)
 **License:** MIT
 
-This is a lightweight, serverless-first demo application with ~373 lines of code total, designed for rapid prototyping and teaching serverless concepts.
+This is a lightweight, serverless-first demo application designed for rapid prototyping and teaching serverless concepts.
 
 ## Tech Stack
 
@@ -16,6 +17,7 @@ This is a lightweight, serverless-first demo application with ~373 lines of code
 |-------|------------|
 | Backend | Flask 3.0.0 (Python 3.11) |
 | Server | Gunicorn 21.2.0 |
+| Testing | pytest 8.0.0 |
 | Frontend | Vanilla HTML/CSS/JavaScript (no frameworks) |
 | Containerization | Docker (Python 3.11-slim) |
 | Deployment | Google Cloud Run |
@@ -26,11 +28,13 @@ This is a lightweight, serverless-first demo application with ~373 lines of code
 ```
 task-manager-ui/
 ├── app.py                 # Flask REST API backend (main application)
-├── requirements.txt       # Python dependencies (Flask, Gunicorn)
+├── test_app.py            # Pytest test suite (18 tests)
+├── requirements.txt       # Python dependencies (Flask, Gunicorn, pytest)
 ├── Dockerfile            # Docker configuration for Cloud Run
 ├── templates/
-│   └── index.html        # Frontend SPA (CSS & JS embedded)
+│   └── index.html        # Frontend SPA with AmTrust Financial theme
 ├── README.md             # User documentation
+├── CLAUDE.md             # AI assistant guide (this file)
 ├── .gitignore            # Python/IDE/OS exclusions
 └── push-to-git.sh        # GitHub deployment automation script
 ```
@@ -112,11 +116,22 @@ JSON Response → DOM Update
 
 ### Frontend (templates/index.html)
 - Single-page application pattern
-- All CSS embedded inline (~195 lines)
+- AmTrust Financial theme with CSS custom properties
+- All CSS embedded inline (~230 lines)
 - All JavaScript embedded inline (~86 lines)
 - Async/await for API calls
 - Direct DOM manipulation with innerHTML
 - Mobile-responsive design with flexbox
+
+### Theme Colors (AmTrust Financial)
+```css
+--amtrust-navy: #002855       /* Primary - headers, borders */
+--amtrust-navy-dark: #001a3a  /* Background gradient */
+--amtrust-orange: #F7931E     /* Accent - buttons, highlights */
+--amtrust-orange-dark: #e07d0a /* Button hover state */
+--amtrust-white: #ffffff      /* Card backgrounds */
+--amtrust-gray-light: #f5f7fa /* Task item backgrounds */
+```
 
 ### General
 - Minimal dependencies (only 2 Python packages)
@@ -165,9 +180,34 @@ JSON Response → DOM Update
 
 ## Testing
 
-**Current Status:** No formal testing framework configured
+**Framework:** pytest 8.0.0
+**Test File:** `test_app.py`
+**Total Tests:** 18
 
-**Manual Testing:**
+### Run Tests
+```bash
+# Run all tests
+python -m pytest test_app.py -v
+
+# Run specific test class
+python -m pytest test_app.py::TestHealthEndpoint -v
+
+# Run with coverage (if pytest-cov installed)
+python -m pytest test_app.py --cov=app
+```
+
+### Test Coverage
+| Test Class | Description |
+|------------|-------------|
+| `TestHealthEndpoint` | Health check endpoint (1 test) |
+| `TestIndexEndpoint` | Index page and AmTrust branding (2 tests) |
+| `TestGetTasks` | GET /api/tasks operations (3 tests) |
+| `TestCreateTask` | POST /api/tasks operations (4 tests) |
+| `TestDeleteTask` | DELETE /api/tasks operations (2 tests) |
+| `TestToggleTask` | PATCH /api/tasks toggle operations (3 tests) |
+| `TestThemeIntegration` | AmTrust theme CSS verification (3 tests) |
+
+### Manual Testing
 ```bash
 # Start server
 python app.py
